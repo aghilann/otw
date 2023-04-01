@@ -27,32 +27,48 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface CommentHtmlProps {
-  postedAt: string;
-  body: string;
+  postedAt: string | null;
+  body: string | null;
   author: {
-    name: string;
-    image: string;
-  };
+    name: string | null;
+    image: string | null;
+  } | null;
+  startLocation: string | null;
+  endLocation: string | null;
+  startTime: string | null;
 }
 
-export function UserCard({ postedAt, body, author }: CommentHtmlProps) {
+export function UserCard({
+  postedAt,
+  body,
+  author,
+  startLocation,
+  endLocation,
+}: CommentHtmlProps) {
   const { classes } = useStyles();
+  console.log({ postedAt, body, author });
   return (
     <Paper withBorder radius="md" className={classes.comment}>
       <Group>
-        <Avatar src={author.image} alt={author.name} radius="xl" />
+        <Avatar
+          src={author?.image}
+          alt={author?.name || 'Annonymous User'}
+          radius="xl"
+        />
         <div>
-          <Text fz="sm">{author.name}</Text>
+          <Text fz="sm">{author?.name}</Text>
+          <Text fz="xs" c="dimmed">
+            {startLocation} to {endLocation}
+          </Text>
           <Text fz="xs" c="dimmed">
             {postedAt}
           </Text>
         </div>
       </Group>
       <TypographyStylesProvider className={classes.body}>
-        <div
-          className={classes.content}
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
+        <div className={classes.content}>
+          <Text>{body}</Text>
+        </div>
       </TypographyStylesProvider>
     </Paper>
   );

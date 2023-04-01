@@ -3,6 +3,8 @@ import { supabase } from './client';
 import { HeroImageRight } from './SignIn';
 import { Table } from '@mantine/core';
 import { TableSort } from './Table';
+import AddJourney from './AddJourney';
+export const UserContext = createContext({ user: null, supabase });
 
 function App() {
   const [user, setUser] = useState<any>({ user: null, supabase });
@@ -53,13 +55,13 @@ function App() {
   ];
 
   if (user) {
-    const UserContext = createContext({ user, supabase });
     return (
       <div className="App">
-        <UserContext.Provider value={{ user, supabase }}>
+        <UserContext.Provider value={{ user: user, supabase }}>
           <h1>Hello, {user.email}</h1>
           <button onClick={signOut}>Sign out</button>
           <TableSort data={data} />
+          {/* <AddJourney onSubmit={() => {}} /> */}
         </UserContext.Provider>
       </div>
     );

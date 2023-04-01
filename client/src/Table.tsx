@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   createStyles,
   Table,
@@ -19,6 +19,7 @@ import {
   IconSearch,
 } from '@tabler/icons-react';
 import { UserCard } from './UserCard';
+import { UserContext } from './App';
 
 const rowData = {
   postedAt: '10 minutes ago',
@@ -58,6 +59,16 @@ interface RowData {
   name: string;
   email: string;
   company: string;
+}
+
+interface IJourneyRow {
+  id: Number;
+  created_at: String;
+  start_time: String | null;
+  start_location: String | null;
+  end_location: String | null;
+  poster_id: String | null;
+  message: String | null;
 }
 
 interface TableSortProps {
@@ -124,6 +135,20 @@ function sortData(
 }
 
 export function TableSort({ data }: TableSortProps) {
+  const { user, supabase } = useContext(UserContext);
+  const [apiData, setApiData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchJourneys = async () => {
+      try {
+        const { data } = await supabase.from('Journeys').select('*').limit(20);
+        setApiData(data as any);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchJourneys();
+  }, []);
   const [search, setSearch] = useState('');
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
@@ -144,14 +169,23 @@ export function TableSort({ data }: TableSortProps) {
     );
   };
 
-  const rows = sortedData.map((row) => (
-    <tr key={row.name}>
-      <UserCard {...rowData} />
-      {/* <td>{row.name}</td>
-      <td>{row.email}</td>
-      <td>{row.company}</td> */}
-    </tr>
-  ));
+  const rows = apiData.map((row: any) => {
+    return (
+      <UserCard
+        startTime={row.start_time}
+        startLocation={row.start_location}
+        endLocation={row.end_location}
+        postedAt={row.posted_at ?? row.created_at}
+        body={row.message}
+        author={{
+          name: row.poster_name,
+          image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxjGUN0-LllHGLY0p478HO7l2ffCLWdKyvseK2IvWF&s',
+        }}
+        key={Math.random()}
+      />
+    );
+  });
 
   return (
     <Container fluid>
