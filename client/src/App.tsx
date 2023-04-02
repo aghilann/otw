@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from './client';
 import { HeroImageRight } from './SignIn';
-import { Button, Table } from '@mantine/core';
+import { Button, Pagination, Table } from '@mantine/core';
 import { TableSort } from './Table';
 import { MyHeader } from './MyHeader';
 import AddJourney from './AddJourney';
@@ -64,6 +64,7 @@ function App() {
         <UserContext.Provider value={{ user: user, supabase }}>
           <TableSort data={data} />
           {/* <AddJourney onSubmit={() => {}} /> */}
+          <Pagination total={5} />
         </UserContext.Provider>
       </div>
     );

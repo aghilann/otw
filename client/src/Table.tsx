@@ -142,7 +142,7 @@ export function TableSort({ data }: TableSortProps) {
   useEffect(() => {
     const fetchJourneys = async () => {
       try {
-        const { data } = await supabase.from('Journeys').select('*');
+        const { data } = await supabase.from('Journeys').select('*').limit(5);
         setApiData(data as any);
       } catch (error) {
         throw error;
