@@ -95,7 +95,7 @@ export function HeroImageBackground({ signInWithGitHub }: any) {
   return (
     <div className={classes.wrapper}>
       <div className={classes.inner}>
-        <Title className={classes.title}>
+        {/* <Title className={classes.title}>
           <Text component="span" inherit className={classes.highlight}>
             On the Way
           </Text>
@@ -106,7 +106,7 @@ export function HeroImageBackground({ signInWithGitHub }: any) {
             A way to for to find people going to the same place as you and
             offset the costs.
           </Text>
-        </Container>
+        </Container> */}
       </div>
     </div>
   );
