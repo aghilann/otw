@@ -65,13 +65,11 @@ export function UserCard({
       <Group>
         <Avatar
           src={author?.image}
-          alt={faker.name.fullName() || 'Annonymous User'}
+          alt={author?.name || 'Annonymous User'}
           radius="xl"
         />
         <div>
-          <Text fz="sm">
-            {fakeNames[Math.floor(Math.random() * 11)] ?? author?.name}
-          </Text>
+          <Text fz="sm">{author?.name}</Text>
           <Text fz="xs" c="dimmed">
             {startLocation} to {endLocation}
           </Text>

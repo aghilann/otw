@@ -135,7 +135,7 @@ function sortData(
   );
 }
 
-export function TableSort({ data }: TableSortProps) {
+export function TableSort({ data = [] }: TableSortProps) {
   const { user, supabase } = useContext(UserContext);
   const [apiData, setApiData] = useState<any>([]);
 

@@ -4,8 +4,8 @@ import { HeroImageRight } from './SignIn';
 import { Button, Pagination, Table } from '@mantine/core';
 import { TableSort } from './Table';
 import { MyHeader } from './MyHeader';
-import AddJourney from './AddJourney';
 import { Dummy } from './Dummy';
+import { AddForm } from './AddForm';
 export const UserContext = createContext({ user: null, supabase });
 
 function App() {
@@ -62,6 +62,7 @@ function App() {
         <MyHeader signOut={signOut} />
         {/* <Dummy /> */}
         <UserContext.Provider value={{ user: user, supabase }}>
+          <AddForm />
           <TableSort data={data} />
           {/* <AddJourney onSubmit={() => {}} /> */}
           <Pagination total={5} />
