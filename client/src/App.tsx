@@ -1,11 +1,12 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from './client';
 import { HeroImageRight } from './SignIn';
-import { Button, Pagination, Table } from '@mantine/core';
+import { Button, Container, Pagination, Table } from '@mantine/core';
 import { TableSort } from './Table';
 import { MyHeader } from './MyHeader';
 import { Dummy } from './Dummy';
 import { AddForm } from './AddForm';
+import { HeroImageBackground } from './Hero';
 export const UserContext = createContext({ user: null, supabase });
 
 function App() {
@@ -66,16 +67,17 @@ function App() {
           <TableSort data={data} />
           {/* <AddJourney onSubmit={() => {}} /> */}
           <Pagination total={5} />
+          <HeroImageBackground />
         </UserContext.Provider>
       </div>
     );
   }
   return (
     <div className="App">
-      <HeroImageRight
-        style={{ margin: 0 }}
-        signInWithGitHub={signInWithGitHub}
-      />
+      <Container size="md">
+        <HeroImageBackground signInWithGitHub={signInWithGitHub} />
+        {/* <HeroImageRight style={{ margin: 0 }} /> */}
+      </Container>
     </div>
   );
 }

@@ -93,11 +93,11 @@ export function MyHeader({ signOut }: any) {
   const links = [
     {
       link: '/about',
-      label: 'Home',
+      label: 'Book',
     },
     {
       link: '/pricing',
-      label: 'Pricing',
+      label: 'Journies',
     },
     {
       link: '/sign-out',

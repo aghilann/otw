@@ -10,7 +10,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         fontFamily: 'Verdana, sans-serif',
         fontFamilyMonospace: 'Monaco, Courier, monospace',
         headings: { fontFamily: 'Greycliff CF, sans-serif' },
-        colorScheme: 'dark',
+        colorScheme: 'light',
+        primaryColor: 'orange',
       }}
       withGlobalStyles
       withNormalizeCSS

@@ -85,7 +85,7 @@ export function UserCard({
       </Group>
       <TypographyStylesProvider className={classes.body}>
         <div className={classes.content}>
-          <Text>{faker.lorem.sentences(2)}</Text>
+          <Text>{body}</Text>
         </div>
       </TypographyStylesProvider>
     </Paper>
