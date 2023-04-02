@@ -10,6 +10,7 @@ import {
   TextInput,
   rem,
   Container,
+  Button,
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
 import {
@@ -141,7 +142,7 @@ export function TableSort({ data }: TableSortProps) {
   useEffect(() => {
     const fetchJourneys = async () => {
       try {
-        const { data } = await supabase.from('Journeys').select('*').limit(20);
+        const { data } = await supabase.from('Journeys').select('*');
         setApiData(data as any);
       } catch (error) {
         throw error;
@@ -149,6 +150,7 @@ export function TableSort({ data }: TableSortProps) {
     };
     fetchJourneys();
   }, []);
+
   const [search, setSearch] = useState('');
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
@@ -172,7 +174,7 @@ export function TableSort({ data }: TableSortProps) {
   const rows = apiData.map((row: any) => {
     return (
       <UserCard
-        startTime={row.start_time}
+        startTime={row.start_time?.substring(0, row.start_time?.indexOf('T'))}
         startLocation={row.start_location}
         endLocation={row.end_location}
         postedAt={row.posted_at ?? row.created_at}
@@ -190,13 +192,38 @@ export function TableSort({ data }: TableSortProps) {
   return (
     <Container fluid>
       <ScrollArea>
-        <TextInput
+        {/* <TextInput
           placeholder="Search by any field"
           mb="md"
           icon={<IconSearch size="0.9rem" stroke={1.5} />}
           value={search}
           onChange={handleSearchChange}
-        />
+        /> */}
+        <Group position="left">
+          <Button
+            radius="md"
+            variant="outline"
+            onClick={() => {
+              const newData = [...apiData].sort((a: any, b: any) => {
+                return a.start_time.localeCompare(b.start_time);
+              });
+              setApiData(newData);
+            }}
+          >
+            My Posts
+          </Button>
+          <Button
+            radius="md"
+            variant="outline"
+            onClick={() => {
+              setApiData((data: any) =>
+                data.filter((item: any) => item.poster_id === (user as any).id)
+              );
+            }}
+          >
+            My Journeys
+          </Button>
+        </Group>
         <Table
           horizontalSpacing="md"
           verticalSpacing="xs"
@@ -205,13 +232,6 @@ export function TableSort({ data }: TableSortProps) {
         >
           <thead>
             <tr>
-              <Th
-                sorted={sortBy === 'name'}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting('name')}
-              >
-                Name
-              </Th>
               {/* <Th
               sorted={sortBy === 'email'}
               reversed={reverseSortDirection}

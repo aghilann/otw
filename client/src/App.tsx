@@ -1,9 +1,11 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from './client';
 import { HeroImageRight } from './SignIn';
-import { Table } from '@mantine/core';
+import { Button, Table } from '@mantine/core';
 import { TableSort } from './Table';
+import { MyHeader } from './MyHeader';
 import AddJourney from './AddJourney';
+import { Dummy } from './Dummy';
 export const UserContext = createContext({ user: null, supabase });
 
 function App() {
@@ -57,9 +59,9 @@ function App() {
   if (user) {
     return (
       <div className="App">
+        <MyHeader signOut={signOut} />
+        {/* <Dummy /> */}
         <UserContext.Provider value={{ user: user, supabase }}>
-          <h1>Hello, {user.email}</h1>
-          <button onClick={signOut}>Sign out</button>
           <TableSort data={data} />
           {/* <AddJourney onSubmit={() => {}} /> */}
         </UserContext.Provider>
